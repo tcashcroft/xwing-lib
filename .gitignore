@@ -5,7 +5,7 @@
 !/.gitlab-ci.yml
 !/Dockerfile
 !/LICENSE.md
-!/pom.xml
+!/pom.yml
 !/README.md
 !/lombok.config
 !/.mvn
