@@ -77,7 +77,7 @@ public class Initializer {
       Path factionsPath = Paths.get(dataRepoString, "factions", "factions.json");
       Path actionsPath = Paths.get(dataRepoString, "actions", "actions.json");
       Path upgradesDirPath = Paths.get(dataRepoString, "upgrades");
-      Path statsPath = Paths.get(dataRepoString, "stats", "status.json");
+      Path statsPath = Paths.get(dataRepoString, "stats", "stats.json");
 
       final String PILOTS_DIR_SUBPATH = "pilots";
       Path foPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "first-order");
@@ -86,7 +86,7 @@ public class Initializer {
       Path rebelPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "rebel-alliance");
       Path resistancePilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "resistance");
       Path scumPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "scum-and-villainy");
-      Path cisPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "spearatist-alliance");
+      Path cisPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "separatist-alliance");
 
       // deserialize the data
       JsonNode factionsRoot = mapper.readTree(factionsPath.toFile());

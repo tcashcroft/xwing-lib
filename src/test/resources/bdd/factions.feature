@@ -36,7 +36,7 @@ Feature: Faction-level features of the X-Wing library
     Then I get a <pilotList>
     Examples:
     | chassis | pilotList |
-    | "arc170starfighter" | sinker, jag, oddball-arc170starfighter, wolffe, 104thbattalionpilot, squadsevenveteran, garvendreis, ibtisam, norrawexley, sharabey |
+    | "ARC_170_STARFIGHTER" | sinker, jag, oddball-arc170starfighter, wolffe, 104thbattalionpilot, squadsevenveteran, garvendreis, ibtisam, norrawexley, sharabey |
 
   Scenario Outline: Get a list of pilots with the same chassis and faction
     Given a shipProducer
@@ -45,5 +45,5 @@ Feature: Faction-level features of the X-Wing library
     Then I get faction-specific <factionPilotList>
     Examples:
     | chassis | faction | factionPilotList |
-    | "arc170starfighter" | "rebelalliance" | garvendreis, ibtisam, norrawexley, sharabey |
-    | "arc170starfighter" | "galacticrepublic" | sinker, jag, oddball-arc170starfighter, wolffe, 104thbattalionpilot, squadsevenveteran |
+    | "ARC_170_STARFIGHTER" | "rebelalliance" | garvendreis, ibtisam, norrawexley, sharabey |
+    | "ARC_170_STARFIGHTER" | "galacticrepublic" | sinker, jag, oddball-arc170starfighter, wolffe, 104thbattalionpilot, squadsevenveteran |

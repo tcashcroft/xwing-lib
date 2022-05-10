@@ -85,6 +85,7 @@ public class FactionsFeatureTest {
 
   @When("I ask for all pilots of a {string}")
   public void getChassisPilots(String chassis) {
+    log.error("Chassis: {}", chassis);
     this.chassis = Ship.Type.parse(chassis);
     this.chassisPilots = shipProducer.getPilots(this.chassis);
   }

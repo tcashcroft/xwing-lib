@@ -64,8 +64,8 @@ build:
   - groupId: org.apache.maven.plugins
     artifactId: maven-compiler-plugin
     configuration:
-      source: 16
-      target: 16
+      source: 11
+      target: 11
   - groupId: org.jacoco
     artifactId: jacoco-maven-plugin
     version: 0.8.7
