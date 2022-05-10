@@ -8,7 +8,7 @@
 !/pom.xml
 !/README.md
 !/lombok.config
-!/xai
+!/.mvn
 /src/main/resources/config
 /src/test/resources/config
 /src/main/resources/xwing-data2
