@@ -51,6 +51,7 @@ public class Maneuver {
   }
 
   /*
+    Maneuver Codes from xwing-data2
     A - Reverse left
     B - Left bank
     D - Reverse right
