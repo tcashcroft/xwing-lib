@@ -32,6 +32,9 @@ class Example {
 }
 ```
 
+### Disclaimer
+All references to Star Wars characters and properties are the property of Disney and LucasFilm. All references to the Star War X-Wing Miniatures game are the property of 
+Asmodee and whatever studio they have most recently assigned the X-Wing Miniatures Game to be a part of (Atomic Mass Games at the time of writing).
 
 ### License
 [Apache v2](LICENSE)
