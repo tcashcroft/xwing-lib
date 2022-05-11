@@ -40,6 +40,7 @@ public class Upgrade {
     TURRET;
 
     private static final List<String> charsToReplace = Arrays.asList(" ", "-", "/");
+
     public static Type parse(String value) {
       String sanitizedString = value;
       for (String toReplace : charsToReplace) {
@@ -68,12 +69,16 @@ public class Upgrade {
     private List<String> equipped = new ArrayList<>();
     private List<Utils.Keyword> keywords = new ArrayList<>();
     private List<String> arcs = new ArrayList<>();
+
     @JsonProperty("force_side")
     private List<String> forceSide = new ArrayList<>();
+
     private List<String> names = new ArrayList<>();
     private List<String> shipAbility;
+
     @JsonProperty("non-limited")
     private boolean nonLimited;
+
     private boolean standardized;
     private boolean solitary;
     private Action action;
@@ -87,7 +92,9 @@ public class Upgrade {
   @Data
   public static class Cost {
     private int value;
-    private String stringValue; // ? (or similar) are the value for upgrades that haven't had points updated yet
+    private String
+        stringValue; // ? (or similar) are the value for upgrades that haven't had points updated
+                     // yet
 
     @JsonSetter("value")
     private void setValueFromJson(String s) {

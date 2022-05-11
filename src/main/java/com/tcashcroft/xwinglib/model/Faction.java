@@ -60,6 +60,7 @@ public class Faction {
       return this.value;
     }
   }
+
   private Type type;
   private String name;
   private String xws;

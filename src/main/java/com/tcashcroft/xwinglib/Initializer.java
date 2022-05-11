@@ -21,9 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Initializes X-Wing Library data
- */
+/** Initializes X-Wing Library data */
 @Slf4j
 public class Initializer {
 
@@ -37,17 +35,16 @@ public class Initializer {
 
   private final ObjectMapper mapper;
 
-  @Getter
-  private ShipProducer shipProducer;
+  @Getter private ShipProducer shipProducer;
 
   /**
-   * Constructs a library initializer class when given a URI that points to the xwing-data2 repository. Initial
-   * deserialization of objects occurs and passed to an instantiation of the
-   * {@link com.tcashcroft.xwinglib.ShipProducer}. While initial data cleanup will be facilitated in this class, data
-   * linking and relationships will be handled by the ShipProducer.
+   * Constructs a library initializer class when given a URI that points to the xwing-data2
+   * repository. Initial deserialization of objects occurs and passed to an instantiation of the
+   * {@link com.tcashcroft.xwinglib.ShipProducer}. While initial data cleanup will be facilitated in
+   * this class, data linking and relationships will be handled by the ShipProducer.
    *
-   * @param dataRepoTarget a {@link java.net.URI} that points to the xwing-data2 repository (and will be used to clone
-   *                       the repo)
+   * @param dataRepoTarget a {@link java.net.URI} that points to the xwing-data2 repository (and
+   *     will be used to clone the repo)
    */
   public Initializer(URI dataRepoTarget) throws XwingLibInitializationException {
     this.dataRepoTarget = dataRepoTarget;
@@ -59,9 +56,10 @@ public class Initializer {
   /**
    * Initializes the X-Wing Library's data from the xwing-data2 repository.
    *
-   * The repository is cloned or pulled, the the various objects are parsed out. Where applicable, objects are augmented
-   * with additional data in the repository. Successful initialization results in a fully instantiated {@link ShipProducer}
-   * that is ready for use in retrieving the various library objects.
+   * <p>The repository is cloned or pulled, the the various objects are parsed out. Where
+   * applicable, objects are augmented with additional data in the repository. Successful
+   * initialization results in a fully instantiated {@link ShipProducer} that is ready for use in
+   * retrieving the various library objects.
    *
    * @throws XwingLibInitializationException
    */
@@ -145,10 +143,7 @@ public class Initializer {
         Git.open(targetFile).pull();
       } else {
         // clone
-        Git.cloneRepository()
-            .setURI(dataRepoTarget.toString())
-            .setDirectory(targetFile)
-            .call();
+        Git.cloneRepository().setURI(dataRepoTarget.toString()).setDirectory(targetFile).call();
       }
     } catch (IOException e) {
       throw new XwingLibInitializationException("Unable to pull repository", e);
@@ -158,7 +153,8 @@ public class Initializer {
   }
 
   /**
-   * Processes individual pilot/ship files and maps them to {@link com.tcashcroft.xwinglib.model.Ship} objects.
+   * Processes individual pilot/ship files and maps them to {@link
+   * com.tcashcroft.xwinglib.model.Ship} objects.
    *
    * @param factionDir the full path to the faction dir in the X-Wing data repo
    * @return List of {@link com.tcashcroft.xwinglib.model.Ship}
@@ -204,14 +200,15 @@ public class Initializer {
       augmentedShipStat.setValue(shipStat.getValue());
       augmentedShipStat.setRecovers(shipStat.getRecovers());
 
-      Optional<Stat> statOptional = stats.stream()
-          .filter(
-              s -> s.getName().equalsIgnoreCase(shipStat.getType().toString())
-          )
-          .findFirst()
-          .or(
-              () -> stats.stream().filter(s-> s.getName().equalsIgnoreCase(shipStat.getArc())).findFirst()
-          );
+      Optional<Stat> statOptional =
+          stats.stream()
+              .filter(s -> s.getName().equalsIgnoreCase(shipStat.getType().toString()))
+              .findFirst()
+              .or(
+                  () ->
+                      stats.stream()
+                          .filter(s -> s.getName().equalsIgnoreCase(shipStat.getArc()))
+                          .findFirst());
       if (statOptional.isPresent()) {
         Stat stat = statOptional.get();
         augmentedShipStat.setName(stat.name);
@@ -241,7 +238,8 @@ public class Initializer {
     augmentedFaction.setXws(faction.getXws());
     augmentedFaction.setFfg(faction.getFfg());
 
-    Optional<Faction> factionOptional = factions.stream().filter(f -> f.getName().equals(faction.getType().toString())).findFirst();
+    Optional<Faction> factionOptional =
+        factions.stream().filter(f -> f.getName().equals(faction.getType().toString())).findFirst();
     if (factionOptional.isPresent()) {
       Faction fullFaction = factionOptional.get();
       augmentedFaction.setName(fullFaction.getName());
@@ -256,12 +254,21 @@ public class Initializer {
 
   /**
    * Augments an {@link Action} with data from the xwing-data2 action objects.
+   *
    * @param actions the action objects from xwing-data2
    * @param actionToAugment the {@link Action} to augment
    * @return the augmented action
    */
   protected Action augmentAction(List<Action> actions, Action actionToAugment) {
-    Optional<Action> ffgActionOptional = actions.stream().filter(a -> a.getName().replace("-", "_").replace(" ", "_").equalsIgnoreCase(actionToAugment.getType().toString())).findFirst();
+    Optional<Action> ffgActionOptional =
+        actions.stream()
+            .filter(
+                a ->
+                    a.getName()
+                        .replace("-", "_")
+                        .replace(" ", "_")
+                        .equalsIgnoreCase(actionToAugment.getType().toString()))
+            .findFirst();
     Action augmentedAction = new Action();
     augmentedAction.setDifficulty(actionToAugment.getDifficulty());
     augmentedAction.setType(actionToAugment.getType());
@@ -284,6 +291,7 @@ public class Initializer {
 
   /**
    * Augments all of a list of {@link Action} with data from the xwing-data2 action objects.
+   *
    * @param actions the list of action objects from the xwing-data2 repo
    * @param shipActions the list of {@link Action} to augmented
    * @return the augmented actions list
@@ -321,14 +329,13 @@ public class Initializer {
     }
   }
 
-  /**
-   * Represents the list of Stats in the xwing-data2 repo under data/stats/stats.json
-   */
+  /** Represents the list of Stats in the xwing-data2 repo under data/stats/stats.json */
   @Data
   private static class Stat {
     private String name;
     private String xws;
     private int ffg;
+
     @JsonAlias("ffg_name")
     private String ffgName;
   }

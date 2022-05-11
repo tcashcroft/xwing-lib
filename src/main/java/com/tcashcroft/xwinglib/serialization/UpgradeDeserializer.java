@@ -21,7 +21,8 @@ public class UpgradeDeserializer extends JsonDeserializer<Upgrade> {
   }
 
   @Override
-  public Upgrade deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
+  public Upgrade deserialize(JsonParser jsonParser, DeserializationContext context)
+      throws IOException {
     JsonNode root = jsonParser.readValueAsTree();
     System.out.println(root.toString());
     Upgrade upgrade = new Upgrade();

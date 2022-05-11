@@ -114,6 +114,7 @@ public class Ship {
     VULTURE_CLASS_DROID_FIGHTER;
 
     private static final List<String> charsToReplace = Arrays.asList(" ", "-", "/");
+
     public static Type parse(String value) {
       String sanitizedString = value;
       for (String toReplace : charsToReplace) {

@@ -36,7 +36,9 @@ public class ShipProducer {
    * @return List of {@link Ship}
    */
   public List<Ship> getShips(Faction.Type faction) {
-    return ALL_SHIPS.stream().filter(s -> s.getFaction().getType().equals(faction)).collect(Collectors.toList());
+    return ALL_SHIPS.stream()
+        .filter(s -> s.getFaction().getType().equals(faction))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -56,7 +58,10 @@ public class ShipProducer {
    * @return List of {@link Pilot}
    */
   public List<Pilot> getPilots(Ship.Type chassis) {
-    return ALL_SHIPS.stream().flatMap(s -> s.getPilots().stream()).filter(p -> p.getShip().getType().equals(chassis)).collect(Collectors.toList());
+    return ALL_SHIPS.stream()
+        .flatMap(s -> s.getPilots().stream())
+        .filter(p -> p.getShip().getType().equals(chassis))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -67,7 +72,9 @@ public class ShipProducer {
    * @return List of {@link Pilot}
    */
   public List<Pilot> getPilots(Ship.Type chassis, Faction.Type faction) {
-    return getPilots(chassis).stream().filter(p -> p.getShip().getFaction().getType().equals(faction)).collect(Collectors.toList());
+    return getPilots(chassis).stream()
+        .filter(p -> p.getShip().getFaction().getType().equals(faction))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -89,7 +96,10 @@ public class ShipProducer {
     List<Upgrade> factionUpgrades = new ArrayList<>();
     for (Upgrade upgrade : ALL_UPGRADES) {
       for (Upgrade.Restriction restriction : upgrade.getRestrictions()) {
-        Optional<String> factionOptional = restriction.getFactions().stream().filter(fs -> fs.equals(faction.toString())).findFirst();
+        Optional<String> factionOptional =
+            restriction.getFactions().stream()
+                .filter(fs -> fs.equals(faction.toString()))
+                .findFirst();
         if (factionOptional.isPresent()) {
           factionUpgrades.add(upgrade);
         }

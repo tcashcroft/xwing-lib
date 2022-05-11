@@ -18,7 +18,8 @@ import java.util.Map;
 public class ShipDeserializer extends JsonDeserializer<Ship> {
 
   @Override
-  public Ship deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
+  public Ship deserialize(JsonParser jsonParser, DeserializationContext context)
+      throws IOException {
     JsonNode root = jsonParser.readValueAsTree();
     Ship ship = new Ship();
     ship.setName(root.get("name").asText());
@@ -38,7 +39,7 @@ public class ShipDeserializer extends JsonDeserializer<Ship> {
     faction.setType(Faction.Type.parse(root.get("faction").asText()));
     ship.setFaction(faction);
     String iconUriString = root.path("icon").asText();
-    ship.setIcon(iconUriString.isBlank()? null : URI.create(iconUriString));
+    ship.setIcon(iconUriString.isBlank() ? null : URI.create(iconUriString));
     List<ShipStat> stats = new ArrayList<>();
     for (JsonNode statNode : root.get("stats")) {
       ShipStat stat = new ShipStat();
@@ -198,5 +199,4 @@ public class ShipDeserializer extends JsonDeserializer<Ship> {
     }
     return maneuverMap;
   }
-
 }

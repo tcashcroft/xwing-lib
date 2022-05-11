@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 public class PilotDeserializer extends JsonDeserializer<Pilot> {
 
   @Override
-  public Pilot deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
+  public Pilot deserialize(JsonParser jsonParser, DeserializationContext context)
+      throws IOException {
     JsonNode root = jsonParser.readValueAsTree();
     Pilot pilot = new Pilot();
     pilot.setName(root.get("name").asText());
