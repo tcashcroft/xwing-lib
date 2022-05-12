@@ -123,7 +123,7 @@ public class InitializerTest {
     List<Ship> ships = uninitInitializer.processFactionPilots(Paths.get("/tmp", "xwing-data2", "data", "pilots", factionSubpath));
 
     Ship ship = ships.stream().filter(it -> it.getXws().equals(shipId)).findFirst().orElseThrow();
-    List<Maneuver> maneuvers = ship.getDial().values().stream().toList();
+    List<Maneuver> maneuvers = ship.getDial().values().stream().collect(java.util.stream.Collectors.toList());
     boolean finalEquals = true;
     for (Maneuver actual : maneuvers) {
       boolean equal = false;
