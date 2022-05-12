@@ -2,11 +2,13 @@ package com.tcashcroft.xwinglib.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.tcashcroft.xwinglib.serialization.PilotDeserializer;
-import lombok.Data;
-
 import java.net.URI;
 import java.util.List;
+import lombok.Data;
 
+/**
+ * Represents a pilot for a given ship.
+ */
 @Data
 @JsonDeserialize(using = PilotDeserializer.class)
 public class Pilot {

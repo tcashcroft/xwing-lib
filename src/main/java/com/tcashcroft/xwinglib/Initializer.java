@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tcashcroft.xwinglib.exception.XwingLibInitializationException;
-import com.tcashcroft.xwinglib.model.*;
+import com.tcashcroft.xwinglib.model.Action;
+import com.tcashcroft.xwinglib.model.Faction;
+import com.tcashcroft.xwinglib.model.Ship;
+import com.tcashcroft.xwinglib.model.ShipStat;
+import com.tcashcroft.xwinglib.model.Upgrade;
 import edu.byu.hbll.json.UncheckedObjectMapper;
-import lombok.Data;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -20,21 +18,23 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import lombok.Data;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 
-/** Initializes X-Wing Library data */
+/** Initializes X-Wing Library data. */
 @Slf4j
 public class Initializer {
 
   private final URI dataRepoTarget;
-
+  private final ObjectMapper mapper;
   protected List<Faction> factions = new ArrayList<>();
   protected List<Action> actions = new ArrayList<>();
   protected List<Ship> ships = new ArrayList<>();
   protected List<Upgrade> upgrades = new ArrayList<>();
   protected List<Stat> stats = new ArrayList<>();
-
-  private final ObjectMapper mapper;
-
   @Getter private ShipProducer shipProducer;
 
   /**
@@ -61,30 +61,35 @@ public class Initializer {
    * initialization results in a fully instantiated {@link ShipProducer} that is ready for use in
    * retrieving the various library objects.
    *
-   * @throws XwingLibInitializationException
+   * @throws XwingLibInitializationException when an error occurs during initialization
    */
   public void init() throws XwingLibInitializationException {
     try {
       // clone the repo
-      final String systemTempDirString = System.getProperty("java.io.tmpdir");
-      final String REPO_NAME = "xwing-data2";
-      this.cloneRepoToTempDir(Paths.get(systemTempDirString, REPO_NAME).toFile());
+      final String sysTmpDirString = System.getProperty("java.io.tmpdir");
+      final String repositoryName = "xwing-data2";
+      this.cloneRepoToTempDir(Paths.get(sysTmpDirString, repositoryName).toFile());
 
       // prep the paths
-      final String dataRepoString = Paths.get(systemTempDirString, REPO_NAME, "data").toString();
-      Path factionsPath = Paths.get(dataRepoString, "factions", "factions.json");
-      Path actionsPath = Paths.get(dataRepoString, "actions", "actions.json");
-      Path upgradesDirPath = Paths.get(dataRepoString, "upgrades");
-      Path statsPath = Paths.get(dataRepoString, "stats", "stats.json");
+      final String dataRepoString = Paths.get(sysTmpDirString, repositoryName, "data").toString();
+      final Path factionsPath = Paths.get(dataRepoString, "factions", "factions.json");
+      final Path actionsPath = Paths.get(dataRepoString, "actions", "actions.json");
+      final Path upgradesDirPath = Paths.get(dataRepoString, "upgrades");
+      final Path statsPath = Paths.get(dataRepoString, "stats", "stats.json");
 
-      final String PILOTS_DIR_SUBPATH = "pilots";
-      Path foPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "first-order");
-      Path gePilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "galactic-empire");
-      Path grPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "galactic-republic");
-      Path rebelPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "rebel-alliance");
-      Path resistancePilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "resistance");
-      Path scumPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "scum-and-villainy");
-      Path cisPilotsDirPath = Paths.get(dataRepoString, PILOTS_DIR_SUBPATH, "separatist-alliance");
+      final String pilotsDirSubpath = "pilots";
+      final Path foPilotsDirPath = Paths.get(dataRepoString, pilotsDirSubpath, "first-order");
+      final Path gePilotsDirPath = Paths.get(dataRepoString, pilotsDirSubpath, "galactic-empire");
+      final Path grPilotsDirPath =
+          Paths.get(dataRepoString, pilotsDirSubpath, "galactic-republic");
+      final Path rebelPilotsDirPath =
+          Paths.get(dataRepoString, pilotsDirSubpath, "rebel-alliance");
+      final Path resistancePilotsDirPath =
+          Paths.get(dataRepoString, pilotsDirSubpath, "resistance");
+      final Path scumPilotsDirPath =
+          Paths.get(dataRepoString, pilotsDirSubpath, "scum-and-villainy");
+      final Path cisPilotsDirPath =
+          Paths.get(dataRepoString, pilotsDirSubpath, "separatist-alliance");
 
       // deserialize the data
       JsonNode factionsRoot = mapper.readTree(factionsPath.toFile());
@@ -134,7 +139,7 @@ public class Initializer {
    * Clones the repo to the system's temp directory, or pulls the repo if it already exists.
    *
    * @param targetFile the target file for the repo directory
-   * @throws XwingLibInitializationException
+   * @throws XwingLibInitializationException if an error occurs cloning or pulling the repo
    */
   protected void cloneRepoToTempDir(File targetFile) throws XwingLibInitializationException {
     try {
@@ -158,7 +163,7 @@ public class Initializer {
    *
    * @param factionDir the full path to the faction dir in the X-Wing data repo
    * @return List of {@link com.tcashcroft.xwinglib.model.Ship}
-   * @throws IOException
+   * @throws IOException if an error occurs deserializing the ships
    */
   protected List<Ship> processFactionPilots(Path factionDir) throws IOException {
     File factionDirFile = factionDir.toFile();
@@ -202,7 +207,7 @@ public class Initializer {
 
       Optional<Stat> statOptional =
           stats.stream()
-              .filter(s -> s.getName().equalsIgnoreCase(shipStat.getType().toString()))
+              .filter(s -> s.getName().equalsIgnoreCase(shipStat.getType()))
               .findFirst()
               .or(
                   () ->
@@ -260,6 +265,15 @@ public class Initializer {
    * @return the augmented action
    */
   protected Action augmentAction(List<Action> actions, Action actionToAugment) {
+    Action augmentedAction = new Action();
+    augmentedAction.setDifficulty(actionToAugment.getDifficulty());
+    augmentedAction.setType(actionToAugment.getType());
+
+    if (actionToAugment.getLinkedAction() != null) {
+      Action augmentedLinkedAction = augmentAction(actions, actionToAugment.getLinkedAction());
+      augmentedAction.setLinkedAction(augmentedLinkedAction);
+    }
+
     Optional<Action> ffgActionOptional =
         actions.stream()
             .filter(
@@ -269,14 +283,6 @@ public class Initializer {
                         .replace(" ", "_")
                         .equalsIgnoreCase(actionToAugment.getType().toString()))
             .findFirst();
-    Action augmentedAction = new Action();
-    augmentedAction.setDifficulty(actionToAugment.getDifficulty());
-    augmentedAction.setType(actionToAugment.getType());
-
-    if (actionToAugment.getLinkedAction() != null) {
-      Action augmentedLinkedAction = augmentAction(actions, actionToAugment.getLinkedAction());
-      augmentedAction.setLinkedAction(augmentedLinkedAction);
-    }
 
     if (ffgActionOptional.isPresent()) {
       Action ffgAction = ffgActionOptional.get();
@@ -310,7 +316,7 @@ public class Initializer {
    *
    * @param upgradesDir the full path to the upgrade dir in the X-Wing data repo
    * @return List of {@link com.tcashcroft.xwinglib.model.Upgrade}
-   * @throws IOException
+   * @throws IOException if an error throws while deserializing upgrade objects
    */
   protected List<Upgrade> processUpgrades(Path upgradesDir) throws IOException {
     File upgradeDirFile = upgradesDir.toFile();

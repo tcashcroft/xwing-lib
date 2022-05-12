@@ -7,11 +7,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tcashcroft.xwinglib.model.Upgrade;
 import edu.byu.hbll.json.UncheckedObjectMapper;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Deserializes an {@link Upgrade}.
+ */
 public class UpgradeDeserializer extends JsonDeserializer<Upgrade> {
 
   private final ObjectMapper mapper;
@@ -24,7 +26,6 @@ public class UpgradeDeserializer extends JsonDeserializer<Upgrade> {
   public Upgrade deserialize(JsonParser jsonParser, DeserializationContext context)
       throws IOException {
     JsonNode root = jsonParser.readValueAsTree();
-    System.out.println(root.toString());
     Upgrade upgrade = new Upgrade();
     upgrade.setName(root.get("name").asText());
     upgrade.setXws(root.get("xws").asText());

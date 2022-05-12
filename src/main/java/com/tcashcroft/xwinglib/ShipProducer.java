@@ -4,20 +4,22 @@ import com.tcashcroft.xwinglib.model.Faction;
 import com.tcashcroft.xwinglib.model.Pilot;
 import com.tcashcroft.xwinglib.model.Ship;
 import com.tcashcroft.xwinglib.model.Upgrade;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The public entry-point for accessing {@link Ship} and {@link Upgrade} objects.
+ */
 public class ShipProducer {
 
-  private final List<Ship> ALL_SHIPS;
-  private final List<Upgrade> ALL_UPGRADES;
+  private final List<Ship> allShips;
+  private final List<Upgrade> allUpgrades;
 
   protected ShipProducer(List<Ship> allShips, List<Upgrade> allUpgrades) {
-    this.ALL_SHIPS = allShips;
-    this.ALL_UPGRADES = allUpgrades;
+    this.allShips = allShips;
+    this.allUpgrades = allUpgrades;
   }
 
   /**
@@ -26,7 +28,7 @@ public class ShipProducer {
    * @return List of {@link Ship}
    */
   public List<Ship> getShips() {
-    return ALL_SHIPS;
+    return allShips;
   }
 
   /**
@@ -36,7 +38,7 @@ public class ShipProducer {
    * @return List of {@link Ship}
    */
   public List<Ship> getShips(Faction.Type faction) {
-    return ALL_SHIPS.stream()
+    return allShips.stream()
         .filter(s -> s.getFaction().getType().equals(faction))
         .collect(Collectors.toList());
   }
@@ -48,7 +50,7 @@ public class ShipProducer {
    * @return List of {@link Ship}
    */
   public List<Ship> getShips(Ship.Type chassis) {
-    return ALL_SHIPS.stream().filter(s -> s.getType().equals(chassis)).collect(Collectors.toList());
+    return allShips.stream().filter(s -> s.getType().equals(chassis)).collect(Collectors.toList());
   }
 
   /**
@@ -58,7 +60,7 @@ public class ShipProducer {
    * @return List of {@link Pilot}
    */
   public List<Pilot> getPilots(Ship.Type chassis) {
-    return ALL_SHIPS.stream()
+    return allShips.stream()
         .flatMap(s -> s.getPilots().stream())
         .filter(p -> p.getShip().getType().equals(chassis))
         .collect(Collectors.toList());
@@ -83,7 +85,7 @@ public class ShipProducer {
    * @return List of {@link Upgrade}
    */
   public List<Upgrade> getUpgrades() {
-    return ALL_UPGRADES;
+    return allUpgrades;
   }
 
   /**
@@ -94,7 +96,7 @@ public class ShipProducer {
    */
   public List<Upgrade> getUpgrades(Faction.Type faction) {
     List<Upgrade> factionUpgrades = new ArrayList<>();
-    for (Upgrade upgrade : ALL_UPGRADES) {
+    for (Upgrade upgrade : allUpgrades) {
       for (Upgrade.Restriction restriction : upgrade.getRestrictions()) {
         Optional<String> factionOptional =
             restriction.getFactions().stream()

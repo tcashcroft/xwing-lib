@@ -5,6 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * A model of a ship stat.
+ *
+ * <p>Example: {type: Hull, value: 3}</p>
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

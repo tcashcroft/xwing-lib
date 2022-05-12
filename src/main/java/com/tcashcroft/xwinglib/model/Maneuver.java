@@ -5,11 +5,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a maneuver.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Maneuver {
+
+  /**
+   * An enum for the speed of the maneuver.
+   */
   public enum Speed {
     ZERO("0"),
     ONE("1"),
@@ -24,6 +31,12 @@ public class Maneuver {
       this.value = value;
     }
 
+    /**
+     * Parses a speed from a string value.
+     *
+     * @param value the string value
+     * @return the Speed
+     */
     public static Speed parse(String value) {
       switch (value) {
         case "0":
@@ -44,6 +57,9 @@ public class Maneuver {
     }
   }
 
+  /**
+   * The direction of the maneuver (left, right, or straight).
+   */
   public enum Direction {
     LEFT,
     RIGHT,
@@ -68,6 +84,9 @@ public class Maneuver {
     Y - Right turn
   */
 
+  /**
+   * The type of the maneuver.
+   */
   public enum Type {
     STRAIGHT,
     REVERSE_STRAIGHT,

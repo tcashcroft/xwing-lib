@@ -2,13 +2,15 @@ package com.tcashcroft.xwinglib.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.tcashcroft.xwinglib.serialization.ShipDeserializer;
-import lombok.Data;
-
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import lombok.Data;
 
+/**
+ * Models a ship card.
+ */
 @Data
 @JsonDeserialize(using = ShipDeserializer.class)
 public class Ship {
@@ -25,6 +27,9 @@ public class Ship {
   private URI icon;
   private List<Pilot> pilots;
 
+  /**
+   * The ship type (aka chassis).
+   */
   public enum Type {
     GOZANTI_CLASS_CRUISER,
     RAIDER_CLASS_CORVETTE,
@@ -115,6 +120,12 @@ public class Ship {
 
     private static final List<String> charsToReplace = Arrays.asList(" ", "-", "/");
 
+    /**
+     * Parses a ship type from a string by sanitizing an input string prior to calling valueOf.
+     *
+     * @param value the string value of the ship type
+     * @return a Type
+     */
     public static Type parse(String value) {
       String sanitizedString = value;
       for (String toReplace : charsToReplace) {

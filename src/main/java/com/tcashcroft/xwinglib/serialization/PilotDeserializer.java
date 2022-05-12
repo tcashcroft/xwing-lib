@@ -8,13 +8,15 @@ import com.tcashcroft.xwinglib.model.Pilot;
 import com.tcashcroft.xwinglib.model.ShipAbility;
 import com.tcashcroft.xwinglib.model.Upgrade;
 import com.tcashcroft.xwinglib.model.Utils;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Deserializes a {@link Pilot}.
+ */
 @Slf4j
 public class PilotDeserializer extends JsonDeserializer<Pilot> {
 

@@ -5,9 +5,14 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tcashcroft.xwinglib.model.*;
+import com.tcashcroft.xwinglib.model.Action;
+import com.tcashcroft.xwinglib.model.Faction;
+import com.tcashcroft.xwinglib.model.Maneuver;
+import com.tcashcroft.xwinglib.model.Pilot;
+import com.tcashcroft.xwinglib.model.Ship;
+import com.tcashcroft.xwinglib.model.ShipStat;
+import com.tcashcroft.xwinglib.model.Utils;
 import edu.byu.hbll.json.UncheckedObjectMapper;
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -15,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Deserializes a {@link Ship}.
+ */
 public class ShipDeserializer extends JsonDeserializer<Ship> {
 
   @Override
@@ -89,10 +97,10 @@ public class ShipDeserializer extends JsonDeserializer<Ship> {
   private Map<String, Maneuver> parseDial(JsonNode root) {
     Map<String, Maneuver> maneuverMap = new HashMap<>();
     for (JsonNode n : root.path("dial")) {
-      String maneuverCode = n.asText();
-      String maneuverSpeed = maneuverCode.substring(0, 1);
-      String maneuverChar = maneuverCode.substring(1, 2);
-      String maneuverColor = maneuverCode.substring(2, 3);
+      final String maneuverCode = n.asText();
+      final String maneuverSpeed = maneuverCode.substring(0, 1);
+      final String maneuverChar = maneuverCode.substring(1, 2);
+      final String maneuverColor = maneuverCode.substring(2, 3);
       Maneuver maneuver = new Maneuver();
 
       maneuver.setManeuverId(maneuverCode);

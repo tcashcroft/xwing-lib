@@ -5,10 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a ship action.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Action {
+  /**
+   * The types of actions in the game.
+   */
   public enum Type {
     BARREL_ROLL,
     BOOST,

@@ -1,7 +1,13 @@
 package com.tcashcroft.xwinglib.model;
 
+/**
+ * Enums that are shared between more than one main model.
+ */
 public class Utils {
 
+  /**
+   * The sizes of ships in the game.
+   */
   public enum Size {
     SMALL("Small"),
     MEDIUM("Medium"),
@@ -19,6 +25,9 @@ public class Utils {
     }
   }
 
+  /**
+   * The colors/difficulties for maneuvers or actions in the game.
+   */
   public enum Difficulty {
     WHITE,
     BLUE,
@@ -30,6 +39,9 @@ public class Utils {
     }
   }
 
+  /**
+   * The types of keywords supported in the game.
+   */
   public enum Keyword {
     A_WING,
     B_WING,

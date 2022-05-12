@@ -2,14 +2,20 @@ package com.tcashcroft.xwinglib.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import edu.byu.hbll.misc.Strings;
+import java.net.URI;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.net.URI;
-
+/**
+ * Represents a faction.
+ */
 @Data
 @EqualsAndHashCode
 public class Faction {
+
+  /**
+   * The faction Type.
+   */
   public enum Type {
     CIS("Separatist Alliance"),
     FIRST_ORDER("First Order"),
@@ -25,6 +31,12 @@ public class Faction {
       this.value = value;
     }
 
+    /**
+     * Parses a Type from a given string by sanitizing it prior to calling valueOf.
+     *
+     * @param value the string value
+     * @return the Type
+     */
     public static Type parse(String value) {
       Type type;
       switch (value.toLowerCase().replace("-", "").replace(" ", "")) {
@@ -67,6 +79,11 @@ public class Faction {
   private Integer ffg;
   private URI icon;
 
+  /**
+   * Sets the faction name if it isn't blank.
+   *
+   * @param name the string value
+   */
   @JsonSetter("name")
   public void setName(String name) {
     if (!Strings.isBlank(name)) {
