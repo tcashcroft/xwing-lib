@@ -3,6 +3,7 @@ on: [push]
 jobs:
   generate-code-coverage:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
