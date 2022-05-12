@@ -76,4 +76,10 @@ build:
       inherited: true
       phase: prepare-package
       priority: 0
+  - groupId: org.apache.maven.plugins
+    artifactId: maven-site-plugin
+    version: 3.7.1
+  - groupId: org.apache.maven.plugins
+    artifactId: maven-project-info-reports-plugin
+    version: 3.0.0
 childProjectUrlInheritAppendPath: true

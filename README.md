@@ -1,6 +1,9 @@
 
 # X-Wing Lib
 
+![Coverage](.github/badges/jacoco.svg)
+![Branches](.github/badges/branches.svg)
+
 A Java library for modeling ships and upgrades from the X-Wing miniatures game. Data used to populate this library is pulled
 from the fantastic data in Guidokessel's [Xwing-data2](https://github.com/guidokessels/xwing-data2) repository. The library
 is intended to be fairly lightweight and provides only high-level selection criteria for filtering on ships and upgrades. 

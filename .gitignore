@@ -9,6 +9,7 @@
 !/README.md
 !/lombok.config
 !/.mvn
+!/.github
 /src/main/resources/config
 /src/test/resources/config
 /src/main/resources/xwing-data2
