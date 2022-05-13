@@ -1,0 +1,15 @@
+/*
+!/bin/
+!/src/
+!/.gitignore
+!/.gitlab-ci.yml
+!/Dockerfile
+!/LICENSE.md
+!/pom.xml
+!/README.md
+!/lombok.config
+!/.mvn
+!/.github
+/src/main/resources/config
+/src/test/resources/config
+/src/main/resources/xwing-data2

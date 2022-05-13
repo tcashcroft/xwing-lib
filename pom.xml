@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" child.project.url.inherit.append.path="true" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>edu.byu.hbll.maven</groupId>
+    <artifactId>library-parent</artifactId>
+    <version>4.0.0</version>
+  </parent>
+
+  <groupId>com.tcashcroft</groupId>
+  <artifactId>xwing-lib</artifactId>
+  <version>0.0.1</version>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A library for modelling X-Wing cards based on xwing-data2</description>
+  <url>https://${scmRepository}</url>
+
+  <scm child.scm.connection.inherit.append.path="true" child.scm.developerConnection.inherit.append.path="true" child.scm.url.inherit.append.path="true">
+    <connection>scm:git:git://${scm.repository}.git</connection>
+    <developerConnection>scm:git:ssh://${scm.repository}.git</developerConnection>
+    <url>https://${scm.repository}</url>
+  </scm>
+
+  <properties>
+    <scm.repository>${project.artifactId}</scm.repository>
+    <junit-platform.version>1.8.2</junit-platform.version>
+    <cucumber.version>7.2.3</cucumber.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit-platform-engine</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite</artifactId>
+      <version>${junit-platform.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>6.1.0.202203080745-r</version>
+    </dependency>
+    <dependency>
+      <groupId>edu.byu.hbll</groupId>
+      <artifactId>json</artifactId>
+      <version>1.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>edu.byu.hbll</groupId>
+      <artifactId>misc</artifactId>
+      <version>1.4.1</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.github.johnpoth</groupId>
+          <artifactId>jshell-maven-plugin</artifactId>
+          <version>1.3</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <properties>
+            <configurationParameters>cucumber.junit-platform.naming-strategy=long</configurationParameters>
+          </properties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <inherited>true</inherited>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <inherited>true</inherited>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.7.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.0.0</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
