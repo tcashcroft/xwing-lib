@@ -1,5 +1,7 @@
-name: xwing-lib-actions
-on: [push]
+name: xwing-lib-push
+on:
+  push:
+    branches-ignore: [main]
 jobs:
   generate-code-coverage:
     runs-on: ubuntu-latest
@@ -13,7 +15,7 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Build with Maven
-        run: mvn verify site
+        run: mvn test jacoco:report site
       - name: Generate JaCoCo Badge
         uses: cicirello/jacoco-badge-generator@v2
         with:
