@@ -5,10 +5,25 @@
 
   <groupId>com.tcashcroft</groupId>
   <artifactId>xwing-lib</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.1-PRERELEASE</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A library for modelling X-Wing cards based on xwing-data2</description>
   <url>${project.scm.url}</url>
+
+  <licenses>
+    <license>
+      <name>Apache v2.0 License</name>
+      <url>https://opensource.org/licenses/Apache-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Tyler Ashcroft</name>
+      <email>tcashcroft.dev@gmail.com</email>
+    </developer>
+  </developers>
 
   <scm>
     <connection>scm:git:git://github.com:tcashcroft/${scm.repository}.git</connection>
@@ -107,6 +122,20 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
