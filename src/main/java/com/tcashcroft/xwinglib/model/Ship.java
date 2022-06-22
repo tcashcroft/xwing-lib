@@ -116,7 +116,10 @@ public class Ship {
     HYENA_CLASS_DROID_BOMBER,
     NANTEX_CLASS_STARFIGHTER,
     SITH_INFILTRATOR,
-    VULTURE_CLASS_DROID_FIGHTER;
+    VULTURE_CLASS_DROID_FIGHTER,
+    CLONE_Z_95_HEADHUNTER,
+    ROGUE_CLASS_STARFIGHTER
+    ;
 
     private static final List<String> charsToReplace = Arrays.asList(" ", "-", "/");
 
