@@ -60,10 +60,9 @@ public class ShipProducer {
    * @return List of {@link Pilot}
    */
   public List<Pilot> getPilots(Ship.Type chassis) {
-    return allShips.stream()
-        .flatMap(s -> s.getPilots().stream())
-        .filter(p -> p.getShip().getType().equals(chassis))
-        .collect(Collectors.toList());
+    return allShips.stream().filter(s -> s.getType().equals(chassis))
+            .flatMap(s -> s.getPilots().stream())
+            .collect(Collectors.toList());
   }
 
   /**
@@ -74,9 +73,10 @@ public class ShipProducer {
    * @return List of {@link Pilot}
    */
   public List<Pilot> getPilots(Ship.Type chassis, Faction.Type faction) {
-    return getPilots(chassis).stream()
-        .filter(p -> p.getShip().getFaction().getType().equals(faction))
-        .collect(Collectors.toList());
+    return getPilots(chassis)
+            .stream()
+            .filter(p -> getShips(faction).contains(p))
+            .collect(Collectors.toList());
   }
 
   /**
