@@ -31,6 +31,4 @@ public class Pilot {
   private boolean epic;
   private List<Utils.Keyword> keywords;
   private Force force;
-
-  private Ship ship;
 }

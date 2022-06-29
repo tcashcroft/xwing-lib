@@ -86,7 +86,6 @@ public class ShipDeserializer extends JsonDeserializer<Ship> {
     ObjectMapper mapper = new UncheckedObjectMapper();
     for (JsonNode shipNode : root.get("pilots")) {
       Pilot pilot = mapper.treeToValue(shipNode, Pilot.class);
-      pilot.setShip(ship);
       pilots.add(pilot);
     }
     ship.setPilots(pilots);

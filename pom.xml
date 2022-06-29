@@ -5,7 +5,7 @@
 
   <groupId>com.tcashcroft</groupId>
   <artifactId>xwing-lib</artifactId>
-  <version>0.0.1-PRERELEASE</version>
+  <version>0.0.2-PRERELEASE</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A library for modelling X-Wing cards based on xwing-data2</description>
   <url>${project.scm.url}</url>

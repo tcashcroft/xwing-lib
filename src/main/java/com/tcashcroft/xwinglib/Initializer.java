@@ -163,29 +163,45 @@ public class Initializer {
    *
    * @param factionDir the full path to the faction dir in the X-Wing data repo
    * @return List of {@link com.tcashcroft.xwinglib.model.Ship}
-   * @throws IOException if an error occurs deserializing the ships
    */
-  protected List<Ship> processFactionPilots(Path factionDir) throws IOException {
+  protected List<Ship> processFactionPilots(Path factionDir) {
     File factionDirFile = factionDir.toFile();
     if (factionDirFile.isDirectory()) {
       List<Ship> ships = new ArrayList<>();
       for (File shipFile : factionDirFile.listFiles()) {
         log.info("Ship file name: {}", shipFile.toString());
-        Ship ship = mapper.readValue(shipFile, Ship.class);
-
-        // Augment objects
-        List<ShipStat> augmentedStats = augmentShipStats(stats, ship.getStats());
-        ship.setStats(augmentedStats);
-        ship.setFaction(augmentFaction(factions, ship.getFaction()));
-        List<Action> augmentedActions = augmentActions(actions, ship.getActions());
-        ship.setActions(augmentedActions);
-
-        // add to list
-        ships.add(ship);
+        Optional<Ship> shipOptional = processShip(shipFile);
+        shipOptional.ifPresent(ships::add);
       }
       return ships;
     } else {
       return List.of();
+    }
+  }
+
+  /**
+   * Processes an individual ship. Suppresses any deserialization errors and emits a warning. This is to prevent
+   * upstream errors or unimplemented chassis from failing initialization of the rest of the module.
+   *
+   * @param shipFile the File containing ship and pilot data from X-Wing Data 2
+   * @return {@link Optional} of {@link Ship}
+   */
+  protected Optional<Ship> processShip(File shipFile) {
+    try {
+      Ship ship = mapper.readValue(shipFile, Ship.class);
+
+      // Augment objects
+      List<ShipStat> augmentedStats = augmentShipStats(stats, ship.getStats());
+      ship.setStats(augmentedStats);
+      ship.setFaction(augmentFaction(factions, ship.getFaction()));
+      List<Action> augmentedActions = augmentActions(actions, ship.getActions());
+      ship.setActions(augmentedActions);
+
+      return Optional.of(ship);
+    } catch (IOException | RuntimeException e) {
+      log.warn("Ship file could not be deserialized into a Ship object: {}", shipFile);
+      log.debug(e.getMessage(), e);
+      return Optional.ofNullable(null);
     }
   }
 
