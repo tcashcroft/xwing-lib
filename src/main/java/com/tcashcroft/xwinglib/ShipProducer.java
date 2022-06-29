@@ -75,7 +75,9 @@ public class ShipProducer {
   public List<Pilot> getPilots(Ship.Type chassis, Faction.Type faction) {
     return getPilots(chassis)
             .stream()
-            .filter(p -> getShips(faction).contains(p))
+            .filter(p -> getShips(faction)
+                    .stream().flatMap(s -> s.getPilots().stream())
+                    .collect(Collectors.toList()).contains(p))
             .collect(Collectors.toList());
   }
 

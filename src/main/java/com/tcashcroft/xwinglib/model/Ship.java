@@ -7,12 +7,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Models a ship card.
  */
 @Data
 @JsonDeserialize(using = ShipDeserializer.class)
+@EqualsAndHashCode
 public class Ship {
   private String name;
   private Type type;

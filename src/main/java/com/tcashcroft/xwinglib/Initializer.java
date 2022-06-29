@@ -180,8 +180,9 @@ public class Initializer {
   }
 
   /**
-   * Processes an individual ship. Suppresses any deserialization errors and emits a warning. This is to prevent
-   * upstream errors or unimplemented chassis from failing initialization of the rest of the module.
+   * Processes an individual ship. Suppresses any deserialization errors and emits a warning.
+   * This is to prevent upstream errors or unimplemented chassis from failing initialization
+   * of the rest of the module.
    *
    * @param shipFile the File containing ship and pilot data from X-Wing Data 2
    * @return {@link Optional} of {@link Ship}
