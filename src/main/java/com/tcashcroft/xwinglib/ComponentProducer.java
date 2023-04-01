@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 /**
  * The public entry-point for accessing {@link Ship} and {@link Upgrade} objects.
  */
-public class ShipProducer {
+public class ComponentProducer {
 
   private final List<Ship> allShips;
   private final List<Upgrade> allUpgrades;
 
-  protected ShipProducer(List<Ship> allShips, List<Upgrade> allUpgrades) {
+  protected ComponentProducer(List<Ship> allShips, List<Upgrade> allUpgrades) {
     this.allShips = allShips;
     this.allUpgrades = allUpgrades;
   }

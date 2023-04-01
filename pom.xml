@@ -5,7 +5,7 @@
 
   <groupId>com.tcashcroft</groupId>
   <artifactId>xwing-lib</artifactId>
-  <version>0.0.2-PRERELEASE</version>
+  <version>0.0.3-PRERELEASE</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A library for modelling X-Wing cards based on xwing-data2</description>
   <url>${project.scm.url}</url>
@@ -36,7 +36,7 @@
     <scm.repository>${project.artifactId}</scm.repository>
     <junit-platform.version>1.8.2</junit-platform.version>
     <junit.version>5.8.2</junit.version>
-    <cucumber.version>7.2.3</cucumber.version>
+    <cucumber.version>7.11.2</cucumber.version>
     <jackson.version>2.13.1</jackson.version>
   </properties>
 
@@ -63,7 +63,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.22</version>
+      <version>1.18.26</version>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
@@ -106,6 +106,22 @@
       <groupId>edu.byu.hbll</groupId>
       <artifactId>misc</artifactId>
       <version>1.4.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.4.6</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.4.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.7</version>
     </dependency>
   </dependencies>
 

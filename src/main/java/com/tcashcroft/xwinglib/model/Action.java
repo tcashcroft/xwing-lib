@@ -1,5 +1,6 @@
 package com.tcashcroft.xwinglib.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +38,8 @@ public class Action {
 
   private Utils.Difficulty difficulty;
   private Type type;
+
+  @JsonAlias({"linked", "linkedAction"})
   private Action linkedAction;
 
   private String name;

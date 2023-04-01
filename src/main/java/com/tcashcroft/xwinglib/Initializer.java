@@ -35,16 +35,18 @@ public class Initializer {
   protected List<Ship> ships = new ArrayList<>();
   protected List<Upgrade> upgrades = new ArrayList<>();
   protected List<Stat> stats = new ArrayList<>();
-  @Getter private ShipProducer shipProducer;
+  @Getter private ComponentProducer componentProducer;
 
   /**
    * Constructs a library initializer class when given a URI that points to the xwing-data2
    * repository. Initial deserialization of objects occurs and passed to an instantiation of the
-   * {@link com.tcashcroft.xwinglib.ShipProducer}. While initial data cleanup will be facilitated in
+   * {@link ComponentProducer}. While initial data cleanup will be facilitated in
    * this class, data linking and relationships will be handled by the ShipProducer.
    *
    * @param dataRepoTarget a {@link java.net.URI} that points to the xwing-data2 repository (and
    *     will be used to clone the repo)
+   *
+   * @throws XwingLibInitializationException if any errors occur downloading the repo and processing the components
    */
   public Initializer(URI dataRepoTarget) throws XwingLibInitializationException {
     this.dataRepoTarget = dataRepoTarget;
@@ -56,9 +58,9 @@ public class Initializer {
   /**
    * Initializes the X-Wing Library's data from the xwing-data2 repository.
    *
-   * <p>The repository is cloned or pulled, the the various objects are parsed out. Where
+   * <p>The repository is cloned or pulled, the various objects are parsed out. Where
    * applicable, objects are augmented with additional data in the repository. Successful
-   * initialization results in a fully instantiated {@link ShipProducer} that is ready for use in
+   * initialization results in a fully instantiated {@link ComponentProducer} that is ready for use in
    * retrieving the various library objects.
    *
    * @throws XwingLibInitializationException when an error occurs during initialization
@@ -67,6 +69,7 @@ public class Initializer {
     try {
       // clone the repo
       final String sysTmpDirString = System.getProperty("java.io.tmpdir");
+      log.info("Cloning repo to {}", sysTmpDirString);
       final String repositoryName = "xwing-data2";
       this.cloneRepoToTempDir(Paths.get(sysTmpDirString, repositoryName).toFile());
 
@@ -127,8 +130,18 @@ public class Initializer {
       ships.addAll(processFactionPilots(scumPilotsDirPath));
       ships.addAll(processFactionPilots(cisPilotsDirPath));
 
+      // augment upgrades to resolve data format inconsistencies
+      for (Upgrade upgrade : upgrades) {
+        for (Upgrade.Side side : upgrade.getSides()) {
+          if (side.getGrantsStats().size() > 0) {
+            List<ShipStat> augmentedUpgradeStats = augmentShipStats(stats, side.getGrantsStats());
+            side.setGrantsStats(augmentedUpgradeStats);
+          }
+        }
+      }
+
       // populate the ship producer
-      shipProducer = new ShipProducer(ships, upgrades);
+      componentProducer = new ComponentProducer(ships, upgrades);
 
     } catch (IOException e) {
       throw new XwingLibInitializationException("Error parsing repository files", e);
@@ -171,7 +184,7 @@ public class Initializer {
       for (File shipFile : factionDirFile.listFiles()) {
         log.info("Ship file name: {}", shipFile.toString());
         Optional<Ship> shipOptional = processShip(shipFile);
-        shipOptional.ifPresent(ships::add);
+        shipOptional.ifPresentOrElse(ships::add, () -> log.warn("Ship file not processed successfully: {}", shipFile));
       }
       return ships;
     } else {

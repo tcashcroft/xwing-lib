@@ -38,18 +38,18 @@ public class InitializerTest {
     return Stream.of(
         Arguments.of("first-order", 10),
         Arguments.of("galactic-empire", 18),
-        Arguments.of("galactic-republic", 11),
+        Arguments.of("galactic-republic", 13),
         Arguments.of("rebel-alliance", 21),
         Arguments.of("resistance", 9),
-        Arguments.of("scum-and-villainy", 23),
-        Arguments.of("separatist-alliance", 11)
+        Arguments.of("scum-and-villainy", 24),
+        Arguments.of("separatist-alliance", 12)
     );
   }
 
   @ParameterizedTest
   @MethodSource("factionShipCountData")
   public void testProcessFactionPilots(String factionSubpath, int expectedShipCount) throws Exception {
-    List<Ship> ships = uninitInitializer.processFactionPilots(Paths.get("/tmp", "xwing-data2", "data", "pilots", factionSubpath));
+    List<Ship> ships = uninitInitializer.processFactionPilots(Paths.get(System.getProperty("java.io.tmpdir"), "xwing-data2", "data", "pilots", factionSubpath));
     assertEquals(expectedShipCount, ships.size());
   }
 
@@ -120,7 +120,7 @@ public class InitializerTest {
   @ParameterizedTest
   @MethodSource("dialAndManeuverParsingData")
   public void testDialAndManeuverParsing(String factionSubpath, String shipId, List<Maneuver> expectedManeuvers) throws Exception {
-    List<Ship> ships = uninitInitializer.processFactionPilots(Paths.get("/tmp", "xwing-data2", "data", "pilots", factionSubpath));
+    List<Ship> ships = uninitInitializer.processFactionPilots(Paths.get(System.getProperty("java.io.tmpdir"), "xwing-data2", "data", "pilots", factionSubpath));
 
     Ship ship = ships.stream().filter(it -> it.getXws().equals(shipId)).findFirst().orElseThrow();
     List<Maneuver> maneuvers = ship.getDial().values().stream().collect(java.util.stream.Collectors.toList());
@@ -191,7 +191,7 @@ public class InitializerTest {
   @ParameterizedTest
   @MethodSource("shipStatParsingData")
   public void testShipStatParsing(String factionSubpath, String shipId, List<ShipStat> expectedStats) throws Exception {
-    List<Ship> ships = initializedInitializer.processFactionPilots(Paths.get("/tmp", "xwing-data2", "data", "pilots", factionSubpath));
+    List<Ship> ships = initializedInitializer.processFactionPilots(Paths.get(System.getProperty("java.io.tmpdir"), "xwing-data2", "data", "pilots", factionSubpath));
     initializedInitializer.ships.stream().filter(s -> s.getFaction().getXws().equals(factionSubpath)).collect(Collectors.toList());
     Ship ship = ships.stream().filter(s -> s.getXws().equals(shipId)).findFirst().orElseThrow();
     assertEquals(expectedStats, ship.getStats());
@@ -199,7 +199,7 @@ public class InitializerTest {
 
   @Test
   public void testUpgradeDeserialization() throws Exception {
-    List<Upgrade> upgrades = uninitInitializer.processUpgrades(Paths.get("/tmp", "xwing-data2", "data", "upgrades"));
+    List<Upgrade> upgrades = uninitInitializer.processUpgrades(Paths.get(System.getProperty("java.io.tmpdir"), "xwing-data2", "data", "upgrades"));
     assertTrue(upgrades.size() > 0);
     // TODO add more validations
   }
@@ -224,7 +224,7 @@ public class InitializerTest {
   @ParameterizedTest
   @MethodSource("shipActionData")
   public void testShipActionParsing(String factionSubpath, String shipId, List<Action> expectedActions) throws Exception {
-    List<Ship> ships = initializedInitializer.processFactionPilots(Paths.get("/tmp", "xwing-data2", "data", "pilots", factionSubpath));
+    List<Ship> ships = initializedInitializer.processFactionPilots(Paths.get(System.getProperty("java.io.tmpdir"), "xwing-data2", "data", "pilots", factionSubpath));
     initializedInitializer.ships.stream().filter(s -> s.getFaction().getXws().equals(factionSubpath)).collect(Collectors.toList());
     Ship ship = ships.stream().filter(s -> s.getXws().equals(shipId)).findFirst().orElseThrow();
 

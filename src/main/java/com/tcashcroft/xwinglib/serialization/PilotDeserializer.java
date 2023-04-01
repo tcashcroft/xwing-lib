@@ -29,7 +29,12 @@ public class PilotDeserializer extends JsonDeserializer<Pilot> {
     pilot.setInitiative(root.get("initiative").asInt());
     pilot.setLimited(root.get("limited").asInt());
     pilot.setCost(root.get("cost").asInt());
-    pilot.setLoadout(root.get("loadout").asInt());
+    // Standard Loadouts exclude the loadout value
+    if (root.has("loadout")) {
+      pilot.setLoadout(root.get("loadout").asInt());
+    } else {
+      pilot.setLoadout(0);
+    }
     pilot.setXws(root.get("xws").asText());
     if (root.has("text")) {
       pilot.setText(root.get("text").asText());
@@ -51,6 +56,13 @@ public class PilotDeserializer extends JsonDeserializer<Pilot> {
         slots.add(Upgrade.Type.parse(n.asText()));
       }
       pilot.setSlots(slots);
+    }
+    if (root.has("standardLoadout")) {
+      List<String> standardLoadout = new ArrayList<>();
+      for (JsonNode n : root.path("standardLoadout")) {
+        standardLoadout.add(n.asText());
+      }
+      pilot.setStandardLoadout(standardLoadout);
     }
     if (root.has("artwork")) {
       pilot.setArtwork(URI.create(root.get("artwork").asText()));
