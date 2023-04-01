@@ -1,7 +1,7 @@
 package com.tcashcroft.xwinglib.bdd;
 
 import com.tcashcroft.xwinglib.Initializer;
-import com.tcashcroft.xwinglib.ShipProducer;
+import com.tcashcroft.xwinglib.ComponentProducer;
 import com.tcashcroft.xwinglib.model.Faction;
 import com.tcashcroft.xwinglib.model.Pilot;
 import com.tcashcroft.xwinglib.model.Ship;
@@ -25,24 +25,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FactionsFeatureTest {
 
   private Initializer initializer;
-  private ShipProducer shipProducer;
+  private ComponentProducer componentProducer;
   private List<Ship> factionShips;
   private Faction.Type factionType;
   private List<Upgrade> factionUpgrades;
   private Ship.Type chassis;
   private List<Pilot> chassisPilots;
 
-  @Given("a shipProducer")
+  @Given("a componentProducer")
   public void givenAShipmaker() throws Exception {
     initializer = new Initializer(URI.create("https://github.com/guidokessels/xwing-data2.git"));
     initializer.init();
-    shipProducer = initializer.getShipProducer();
+    componentProducer = initializer.getComponentProducer();
   }
 
   @When("I ask for the {string} ship list")
   public void getShipsByFactionId(String faction) {
     factionType = Faction.Type.parse(faction);
-    factionShips = shipProducer.getShips(factionType);
+    factionShips = componentProducer.getShips(factionType);
   }
 
   @Then("I get the {listOfShipStrings}")
@@ -56,7 +56,7 @@ public class FactionsFeatureTest {
   @When("I ask for the {string}'s upgrade list")
   public void getUpgradesByFactionId(String faction) {
     factionType = Faction.Type.parse(faction);
-    factionUpgrades = shipProducer.getUpgrades(factionType);
+    factionUpgrades = componentProducer.getUpgrades(factionType);
   }
 
   @Then("I get {listOfUpgradesStrings}, not including faction-agnostic upgrades")
@@ -87,7 +87,7 @@ public class FactionsFeatureTest {
   public void getChassisPilots(String chassis) {
     log.error("Chassis: {}", chassis);
     this.chassis = Ship.Type.parse(chassis);
-    this.chassisPilots = shipProducer.getPilots(this.chassis);
+    this.chassisPilots = componentProducer.getPilots(this.chassis);
   }
 
   @Then("I get a {listOfStrings}")
@@ -101,13 +101,13 @@ public class FactionsFeatureTest {
   @When("I ask for all the pilots of a {string}")
   public void getChassisPilots2(String chassis) {
     this.chassis = Ship.Type.parse(chassis);
-    this.chassisPilots = shipProducer.getPilots(this.chassis);
+    this.chassisPilots = componentProducer.getPilots(this.chassis);
   }
 
   @And("they share a {string}")
   public void getChassisPilotsByFaction(String faction) {
     this.factionType = Faction.Type.parse(faction);
-    this.chassisPilots = shipProducer.getPilots(chassis, factionType);
+    this.chassisPilots = componentProducer.getPilots(chassis, factionType);
   }
 
   @Then("I get faction-specific {listOfStrings}")

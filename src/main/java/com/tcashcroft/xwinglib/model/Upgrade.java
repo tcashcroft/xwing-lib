@@ -3,6 +3,7 @@ package com.tcashcroft.xwinglib.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.tcashcroft.xwinglib.serialization.SideDeserializer;
 import com.tcashcroft.xwinglib.serialization.UpgradeDeserializer;
 import java.net.URI;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class Upgrade {
     FORCE_POWER,
     GUNNER,
     HARDPOINT,
+    HYPERDRIVE,
     ILLICIT,
     MISSILE,
     MODIFICATION,
@@ -73,7 +75,7 @@ public class Upgrade {
   private boolean epic;
 
   /**
-   * Represents an restriction on the upgrade.
+   * Represents a restriction on the upgrade.
    *
    * <p>
    * Restrictions can take many forms. It may be a specific ship chassis, or size. This object is
@@ -137,12 +139,23 @@ public class Upgrade {
    * Represents data specific to a given side of the upgrade card.
    */
   @Data
+  @JsonDeserialize(using = SideDeserializer.class)
   public static class Side {
     private String title;
     private Type type;
     private String ability;
     private URI image;
     private List<String> slots;
+
+    // TODO deal with this
+    // the JSON will mix these within the same array. They will need to be parsed object by object
+    private List<Action> grantsActions;
+    private List<Force> grantsForce;
+    private List<ShipStat> grantsStats;
+    // {"type": "slot", "value": "Device", "amount": 1}
+    private List<Upgrade.Type> grantsSlots;
+
+
     private URI artwork;
     private int ffg;
   }

@@ -22,15 +22,15 @@ Example:
 ```Java
 import com.tcashcroft.xwinglib.exception.XwingLibInitializationException;
 import com.tcashcroft.xwinglib.Initializer;
-import com.tcashcroft.xwinglib.ShipProducer;
+import com.tcashcroft.xwinglib.ComponentProducer;
 
 class Example {
   public void getObjects() throws XwingLibInitializationException {
     Initializer initializer = new Initializer(URI.create("https://github.com/guidokessels/xwing-data2"));
-    ShipProducer shipProducer = initializer.getShipProducer();
+    ComponentProducer componentProducer = initializer.getComponentProducer();
 
-    List<Ship> ships = shipProducer.getShips();
-    List<Upgrade> upgrades = shipProducer.getUpgrades();
+    List<Ship> ships = componentProducer.getShips();
+    List<Upgrade> upgrades = componentProducer.getUpgrades();
   }
 }
 ```

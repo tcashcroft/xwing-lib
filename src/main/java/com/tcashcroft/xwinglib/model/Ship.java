@@ -118,7 +118,10 @@ public class Ship {
     HYENA_CLASS_DROID_BOMBER("Hyena-class Droid Bomber"),
     NANTEX_CLASS_STARFIGHTER("Nantex-class Starfighter"),
     SITH_INFILTRATOR("Sith Infiltrator"),
-    VULTURE_CLASS_DROID_FIGHTER("Vulture-class Droid Fighter");
+    VULTURE_CLASS_DROID_FIGHTER("Vulture-class Droid Fighter"),
+    ROGUE_CLASS_STARFIGHTER("Rogue-class Starfighter"),
+    SYLIURE_CLASS_HYPERSPACE_RING("Syliure-class Hyperspace Ring"),
+    CLONE_Z_95_HEADHUNTER("Clone Z-95 Headhunter");
 
     private final String value;
 

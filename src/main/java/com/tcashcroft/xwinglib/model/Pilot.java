@@ -24,6 +24,7 @@ public class Pilot {
   private URI image;
   private ShipAbility shipAbility;
   private List<Upgrade.Type> slots;
+  private List<String> standardLoadout;
   private URI artwork;
   private Integer ffg;
   private boolean standard;
